@@ -1,7 +1,7 @@
 import time
 from selenium import webdriver
 
-def get_screenShots(urls1, urls2) :
+def get_screenShots(urls1, urls2, source1, source2) :
 
     driver1 = webdriver.Chrome()
     driver2 = webdriver.Chrome()
@@ -25,9 +25,9 @@ def get_screenShots(urls1, urls2) :
             time.sleep(25)
 
         class1 = driver1.find_element_by_class_name('visualContainerHost')
-        class1.screenshot('src1/img_' + str(i + 1) + '.png')
+        class1.screenshot(source1 + '/img_' + str(i + 1) + '.png')
         class2 = driver2.find_element_by_class_name('visualContainerHost')
-        class2.screenshot('src2/img_' + str(i + 1) + '.png')
+        class2.screenshot(source2 + '/img_' + str(i + 1) + '.png')
 
     driver1.quit()
 
@@ -56,7 +56,7 @@ def authenciation(driver) :
     time.sleep(5)
 
     driver.find_element_by_xpath('//*[@id="WindowsAzureMultiFactorAuthentication"]').click()
-    time.sleep(10)
+    time.sleep(5)
 
     driver.find_element_by_xpath('//*[@id="idSIButton9"]').click()
     time.sleep(2)
