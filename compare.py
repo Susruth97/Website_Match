@@ -3,7 +3,7 @@ import glob
 from skimage.measure import compare_ssim
 import math
 
-def match_images(source1, source2) :
+def match_images(source1, source2, destination) :
 
     img_list1 = [cv2.imread(file) for file in glob.glob(source1 + '/*.png')]
     img_list2 = [cv2.imread(file) for file in glob.glob(source2 + '/*.png')]
@@ -30,16 +30,24 @@ def match_images(source1, source2) :
             (x, y, w, h) = cv2.boundingRect(countour)
             cv2.rectangle(img1, (x, y), (x + w, y + h), (71, 99, 255), 1)
 
-        percentage = str(math.floor(score * 100))
-        font = cv2.FONT_ITALIC
-        cv2.putText(img1, percentage + '/100', (10, 450), font, 1, (71 ,99 , 255), 2, cv2.LINE_AA)
+        percentage = str(round(score * 100, 2))
+        font = cv2.FONT_HERSHEY_SIMPLEX
+
+        text = str(percentage) + '\n ____ \n \n \n \n 100'
+        y0, dy = 520, 8
+        for i, line in enumerate(text.split('\n')):
+            y = y0 + i * dy
+            cv2.putText(img1, line, (20, y), font, 1, (71 ,99 , 255), 2, cv2.LINE_AA)
+
+        cv2.circle(img1, (66, 526), 60, (71, 99, 255), 2)
 
         if int(score) == 100 :
-            cv2.imwrite('dest/result_matching_img' + str(img_num) + '.png', img1)
+            cv2.imwrite(destination + '/result_matching_img' + str(img_num) + '.png', img1)
         else :
-            cv2.imwrite('dest/result_different_img' + str(img_num) + '.png', img1)
+            cv2.imwrite(destination + '/result_different_img' + str(img_num) + '.png', img1)
 
 
         img_num = img_num + 1
 
-    print("Images Processed :", img_num - 1)
+    print('Images Processed :', img_num - 1)
+    print('Completed!')

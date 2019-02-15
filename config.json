@@ -3,5 +3,7 @@
 	"source2" : "C:/Users/User/PycharmProjects/BasicImageP/src2",
 	"destination" : "C:/Users/User/PycharmProjects/BasicImageP/dest",
 	"xml1_path" : "C:/Users/User/PycharmProjects/BasicImageP/input1.xml",
-	"xml2_path" : "C:/Users/User/PycharmProjects/BasicImageP/input2.xml"
+	"xml2_path" : "C:/Users/User/PycharmProjects/BasicImageP/input2.xml",
+	"username" : "v-shlakh@microsoft.com",
+	"password" : "Oct@1996"
 }

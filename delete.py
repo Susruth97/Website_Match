@@ -1,6 +1,6 @@
 import os
 
-def delete_output (source1, source2, destination) :
+def empty_folders (source1, source2, destination) :
 
     for f in os.listdir(source1):
         if f.endswith(".png"):

@@ -14,11 +14,13 @@ if __name__ == "__main__" :
     destination = path_data['destination']
     xml1_path = path_data['xml1_path']
     xml2_path = path_data['xml2_path']
+    username = path_data['username']
+    password = path_data['password']
 
-    """delete.delete_output(source1, source2, destination)
-    urls1, urls2, names1, names2 = urls.get_url(xml1_path, xml2_path)
-    screens.get_screenShots(urls1, urls2, source1, source2)"""
-    compare.match_images(source1, source2)
+    delete.empty_folders(source1, source2, destination)
+    urls1, urls2, names1, names2 = urls.get_urls(xml1_path, xml2_path)
+    screens.get_screenShots(urls1, urls2, names1, names2, source1, source2, username, password)
+    compare.match_images(source1, source2, destination)
 
 
 

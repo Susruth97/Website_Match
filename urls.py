@@ -1,11 +1,11 @@
 import xml.etree.ElementTree as etree
 
 urls1 = []
-names1 = []
 urls2 = []
+names1 = []
 names2 = []
 
-def get_url(xml1_path, xml2_path) :
+def get_urls(xml1_path, xml2_path) :
 
     tree1 = etree.parse(xml1_path)
     root1 = tree1.getroot()
@@ -18,5 +18,5 @@ def get_url(xml1_path, xml2_path) :
         urls2.append(child2.find('URL').text)
         names2.append(child2.find('UniqueId').text)
 
-    print("Total Urls :", len(urls1))
+    print("Total Input URLs :", len(urls1)+len(urls2))
     return urls1, urls2, names1, names2
