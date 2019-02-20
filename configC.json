@@ -1,0 +1,8 @@
+{
+	"SourceLocation1" : "D:\\ToolOutput\\src1",
+	"SourceLocation2" : "D:\\ToolOutput\\src2",
+	"DestinationLocation" : "D:\\ToolOutput\\dest",
+	"UserEmailAddress": "shivaml@maqsoftware.com",
+	"AppPassword": "njdkxtjykpvhxfsq",
+	"mailRecipients": "sahila@maqsoftware.com"
+}

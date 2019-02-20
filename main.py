@@ -6,22 +6,33 @@ import compare
 
 if __name__ == "__main__" :
 
-    with open('./config.json', 'r') as f :
-        path_data = json.load(f)
+    try :
+        with open('./configC.json', 'r') as f1:
+            path_data1 = json.load(f1)
 
-    source1 = path_data['source1']
-    source2 = path_data['source2']
-    destination = path_data['destination']
-    xml1_path = path_data['xml1_path']
-    xml2_path = path_data['xml2_path']
-    username = path_data['username']
-    password = path_data['password']
+        source1 = path_data1['SourceLocation1']
+        source2 = path_data1['SourceLocation2']
+        destination = path_data1['DestinationLocation']
 
-    delete.empty_folders(source1, source2, destination)
-    urls1, urls2, names1, names2 = urls.get_urls(xml1_path, xml2_path)
-    screens.get_screenShots(urls1, urls2, names1, names2, source1, source2, username, password)
-    compare.match_images(source1, source2, destination)
+        with open('./configP.json', 'r') as f2:
+            path_data2 = json.load(f2)
 
+        username = path_data2['v_username']
+        password = path_data2['v_password']
 
+        xml1_path = 'input1.xml'
+        xml2_path = 'input2.xml'
+
+    except Exception as e :
+        print('Parsing Json :',e)
+
+    try :
+        delete.empty_folders(source1, source2, destination)
+        urls1, urls2, names1, names2 = urls.get_urls(xml1_path, xml2_path)
+        screens.get_screenShots(urls1, urls2, names1, names2, source1, source2, username, password)
+        compare.match_images(source1, source2, destination)
+
+    except Exception as e :
+        print('Calling Functions :', e)
 
 
