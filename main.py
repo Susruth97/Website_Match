@@ -1,5 +1,6 @@
 import json
 import delete
+import screens_threads
 import urls
 import screens
 import compare
@@ -28,8 +29,8 @@ if __name__ == "__main__" :
 
     try :
         delete.empty_folders(source1, source2, destination)
-        urls1, urls2, names1, names2 = urls.get_urls(xml1_path, xml2_path)
-        screens.get_screenShots(urls1, urls2, names1, names2, source1, source2, username, password)
+        urls1, urls2, names1, names2, type = urls.get_urls(xml1_path, xml2_path)
+        screens.get_screenShots(urls1, urls2, names1, names2, type, source1, source2, username, password)
         compare.match_images(source1, source2, destination)
 
     except Exception as e :

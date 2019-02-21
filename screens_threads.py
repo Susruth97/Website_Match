@@ -9,12 +9,11 @@ def get_screenShots(urls1, urls2, names1, names2, type, source1, source2, userna
 
     try :
         options = webdriver.ChromeOptions()
-        #options.add_argument('--headless')
-        #options.add_argument('--disable-gpu')
+        #options.add_argument("headless")
         driver1 = webdriver.Chrome(executable_path='webdriver/chromedriver.exe', chrome_options=options)
         driver2 = webdriver.Chrome(executable_path='webdriver/chromedriver.exe', chrome_options=options)
-        driver1.set_window_size(1920, 1080)
-        driver2.set_window_size(1920, 1080)
+        driver1.set_window_size(1080, 1080)
+        driver2.set_window_size(1080, 1080)
 
         print('Running WebDriver')
 
@@ -23,12 +22,14 @@ def get_screenShots(urls1, urls2, names1, names2, type, source1, source2, userna
         authenciation(driver2, username, password)
 
         print('Authentication Completed')
+
+
         time.sleep(2)
 
         if "BI" in type.upper() :
             print(type)
-            t1 = threading.Thread(target=screenshots_powerBI, args=(driver1, urls1, names1, source1))
-            t2 = threading.Thread(target=screenshots_powerBI, args=(driver2, urls2, names2, source2))
+            t1 = threading.Thread(target=powerBI, args=(driver1, urls1, names1, source1))
+            t2 = threading.Thread(target=powerBI, args=(driver2, urls2, names2, source2))
         else :
             print(type)
             t1 = threading.Thread(target=screenshots_html, args=(driver1, urls1, names1, source1))
@@ -89,30 +90,36 @@ def authenciation(driver, username, password) :
     except Exception as e :
         print("Automating Authentication :", e)
 
-def screenshots_powerBI(driver, urls, names, source) :
+def powerBI(driver, urls, names, source) :
 
     try :
-        for i in range(0, len(urls)):
+        threads = []
+        for i in range(0, len(urls)) :
             print('Fetching URL :', names[i])
+            t = threading.Thread(target=screens_powerBI, args=(driver, urls[i], source, i))
+            threads.append(t)
+            t.start()
 
-            driver.switch_to.window(driver.window_handles[-1])
-            driver.get(urls[i])
+        for t in threads :
+            t.join()
 
-            time.sleep(2)
-            element_present = EC.presence_of_element_located((By.XPATH, "//span[@class='collapsedFiltersTitle largeFontSize']"))
-            WebDriverWait(driver, 20).until(element_present)
-            """                                                         """
-            driver.find_elements_by_class_name("pageview-menu")[0].click()
-
-            driver.find_elements_by_xpath("//div[@class='dropdown-content pbi-glyph-fittopage2']")[0].click()
-
-            time.sleep(28)
-            element = driver.find_element_by_class_name('visualContainerHost')
-            time.sleep(2)
-            element.screenshot(source + '/img_' + str(i + 1) + '.png')
     except Exception as e :
         print(e)
     print('Screenshots Captured')
+
+def screens_powerBI(driver, url, source, i) :
+    try :
+        """driver.switch_to.window(driver.window_handles[-1])"""
+        driver.execute_script('window.open("{}", "_blank");'.format(url))
+        #element_present = EC.presence_of_element_located((By.XPATH, "//span[@class='collapsedFiltersTitle largeFontSize']"))
+        #WebDriverWait(driver, 200).until(element_present)
+        time.sleep(30)
+        element = driver.find_element_by_class_name('visualContainerHost')
+        time.sleep(2)
+        element.screenshot(source + '/img_' + str(i + 1) + '.png')
+
+    except Exception as e :
+        print(e)
 
 def screenshots_html(driver, urls, names, source) :
 
